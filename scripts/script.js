@@ -18,6 +18,10 @@
         4.) Which method deletes the last element of an array? (pop/c, snap, crackle, push)
         5.) Which operator is used to concatenate two strings? (Dot, Arrow, Comma, Plus/c)
 
+        So, I'm running into a problem. My function "setNextQuestion" won't pop out of its loop once all the questions are asked. 
+
+        And, I can't figure out how to connect my timer to my two "correct" and "wrong" classes to increment and decrement, respectively. Once I have that sorted, it's just a matter of prompting the user for a name and logging that and the time left variable in local storage. Then, that can display in the "last-high-score" div on page load. Maybe set the "countDown" function as a global variable? That way it can be called on anywhere?
+
 */
 
 // GLOBAL VARIABLES AND CONSTANTS =====================================================
@@ -71,6 +75,7 @@ const questions = [
     ],
   },
 ];
+console.log(questions);
 var shuffledQuestions, currentQuestionIndex;
 var questionElement = document.getElementById("question");
 var answerButtonsElement = document.getElementById("answer-buttons");
@@ -80,7 +85,12 @@ var nextButton = document.getElementById("next");
 startButton.addEventListener("click", startGame);
 nextButton.addEventListener("click", () => {
   currentQuestionIndex++;
-  setNextQuestion();
+  console.log(currentQuestionIndex);
+  if (currentQuestionIndex === questions.length) {
+    endGame();
+  } else {
+    setNextQuestion();
+  }
 });
 
 // GAME FUNCTIONS =====================================================================
@@ -94,12 +104,12 @@ function startGame() {
   countDown();
 }
 
-function setNextQuestion() {
+function setNextQuestion(event) {
   resetState();
   showQuestion(shuffledQuestions[currentQuestionIndex]);
-  if (shuffledQuestions === currentQuestionIndex) {
-    return;
+  if (shuffledQuestions.length === currentQuestionIndex) {
   }
+  return;
 }
 
 function showQuestion(questions) {
@@ -124,10 +134,8 @@ function selectAnswer(e) {
   Array.from(answerButtonsElement.children).forEach((button) => {
     setStatusClass(button, button.dataset.correct);
   });
-  if (shuffledQuestions > [currentQuestionIndex]) {
+  if (shuffledQuestions > currentQuestionIndex) {
     showQuestion(questions);
-  } else {
-    return;
   }
 }
 
@@ -144,7 +152,7 @@ function setStatusClass(element, correct) {
   if (correct) {
     element.classList.add("correct");
   } else {
-    secondsLeft - 10;
+    element.classList.add("wrong");
   }
 }
 
@@ -153,9 +161,17 @@ function clearStatusClass(element) {
   element.classList.remove("wrong");
 }
 
+function endGame() {
+  console.log("Function here");
+  nextButton.disabled = true;
+  var initials = prompt("Save your initials here: ");
+  localStorage.setItem("User Initials", JSON.stringify(initials));
+}
+
 // TIMER FUNCTIONS ====================================================================
 var timeEl = document.getElementById("time");
 var scoreEl = document.getElementById("last-high-score");
+
 function countDown() {
   var secondsLeft = 60;
 
