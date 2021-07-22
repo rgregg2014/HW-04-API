@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Code Quiz Countdown</title>
+    <link rel="stylesheet" href="./styles/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to the Code Quiz!</h1>
+      <div id="time">Timer</div>
+      <div id="last-high-score"></div>
+    </header>
+
+    <main>
+      <div class="container">
+        <!--div containing questions and answer buttons-->
+        <div class="hide" id="question-container">
+          <div id="question">Question</div>
+          <div id="answer-buttons" class="btn-grid">
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+            <button class="btn"></button>
+          </div>
+        </div>
+        <!--div containing submit and next controls-->
+        <div class="controls">
+          <button id="start-btn" class="start-btn btn">Start</button>
+          <button id="next" class="next-btn hide">Next</button>
+        </div>
+      </div>
+    </main>
+
+    <script src="./scripts/script.js"></script>
+  </body>
+</html>
