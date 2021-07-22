@@ -75,7 +75,6 @@ const questions = [
     ],
   },
 ];
-console.log(questions);
 var shuffledQuestions, currentQuestionIndex;
 var questionElement = document.getElementById("question");
 var answerButtonsElement = document.getElementById("answer-buttons");
@@ -94,6 +93,8 @@ nextButton.addEventListener("click", () => {
 });
 
 // GAME FUNCTIONS =====================================================================
+
+//Starts actual function of the game. Removes start button, shows next button, shuffles question list, shows the div holding the questions, shows the first question, starts timer.
 function startGame() {
   startButton.classList.add("hide");
   nextButton.classList.remove("hide");
@@ -104,6 +105,7 @@ function startGame() {
   countDown();
 }
 
+//clears status classes of body elements in CSS, checks if there is another question available, if not, leaves function
 function setNextQuestion(event) {
   resetState();
   showQuestion(shuffledQuestions[currentQuestionIndex]);
@@ -112,6 +114,7 @@ function setNextQuestion(event) {
   return;
 }
 
+// displays content of questions on question div and answer buttons
 function showQuestion(questions) {
   questionElement.textContent = questions.question;
   questions.answers.forEach((answers) => {
@@ -127,6 +130,7 @@ function showQuestion(questions) {
   });
 }
 
+//builds answer buttons, validates answer and assigns status class for CSS
 function selectAnswer(e) {
   const selectedButton = e.target;
   const correct = selectedButton.dataset.correct;
@@ -139,6 +143,7 @@ function selectAnswer(e) {
   }
 }
 
+// clears status classes in CSS, removes appended buttons
 function resetState() {
   clearStatusClass(document.body);
   while (answerButtonsElement.firstChild) {
@@ -156,11 +161,13 @@ function setStatusClass(element, correct) {
   }
 }
 
+//clears status classes in CSS
 function clearStatusClass(element) {
   element.classList.remove("correct");
   element.classList.remove("wrong");
 }
 
+// disables "Next" button, brings up prompt for user to enter initials, stores value in local storage
 function endGame() {
   console.log("Function here");
   nextButton.disabled = true;
